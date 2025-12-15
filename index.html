@@ -12,7 +12,8 @@
     --tile-dark:linear-gradient(145deg,#4a4a4a,#333,#222);
     --highlight:#1e90ff; --shadow:rgba(0,0,0,0.35);
 }
-body {margin:0;font-family:'Segoe UI',sans-serif;background:var(--bg-light);color:var(--text-light);}
+
+body {margin:0;font-family:'Segoe UI',sans-serif;background:var(--bg-light);color:var(--text-light);scroll-behavior:smooth;}
 body.dark {background:var(--bg-dark);color:var(--text-dark);}
 body.dark .menu-tile,body.dark .expandable,body.dark #bioPanel,body.dark .tileHeader,.technical-tiles div,body.dark #contentBox{background:#2c2c2c;color:#f1f1f1;box-shadow:3px 3px 16px rgba(0,0,0,0.6);}
 body.dark a {color:#1e90ff;text-decoration:underline;}
@@ -32,31 +33,24 @@ body.dark #darkModeToggle {background:var(--tile-dark);color:var(--text-dark);}
 .tileHeader {font-size:1.3rem;font-weight:bold;text-align:center;padding:15px;border-radius:12px;background:var(--tile-light);cursor:pointer;box-shadow:2px 2px 12px var(--shadow);transition:transform .3s,box-shadow .3s;}
 .tileHeader:hover {transform:scale(1.05);box-shadow:0 0 15px var(--highlight),2px 2px 12px var(--shadow);}
 .expandable {max-height:0;overflow:hidden;transition:max-height 0.5s ease,padding 0.5s ease;background:var(--tile-light);padding:0 15px;border-radius:10px;box-shadow:2px 2px 8px var(--shadow);font-size:0.85rem;line-height:1.4;}
-.expandable.show {padding:15px;max-height:2000px;}
-.expandable-content {max-height:400px;overflow-y:auto;padding-right:5px;}
+.expandable.show {padding:15px;max-height:5000px;overflow:visible;} /* expand to full page height */
 
 #profileTile {flex:0 0 180px;display:flex;flex-direction:column;align-items:center;cursor:pointer;text-align:center;}
 #profileTile img {width:140px;border-radius:15px;transition:transform .3s;}
 #profileTile img:hover {transform:scale(1.05);}
-#bioPanel {max-height:0;overflow:auto;transition:max-height 0.5s ease,padding 0.5s ease;background:var(--tile-light);padding:0 15px;border-radius:10px;box-shadow:2px 2px 8px var(--shadow);font-size:0.85rem;line-height:1.4;}
-#bioPanel.show {padding:15px;max-height:600px;}
+#bioPanel {max-height:0;overflow:hidden;transition:max-height 0.5s ease,padding 0.5s ease;background:var(--tile-light);padding:0 15px;border-radius:10px;box-shadow:2px 2px 8px var(--shadow);font-size:0.85rem;line-height:1.4;}
+#bioPanel.show {padding:15px;max-height:5000px;overflow:visible;} /* expand fully */
 
 .technical-tiles {display:flex;flex-wrap:wrap;gap:6px;margin-top:5px;justify-content:center;}
 .technical-tiles div {padding:6px 10px;border-radius:10px;background:var(--tile-light);box-shadow:1px 1px 8px var(--shadow);font-size:0.8rem;transition:transform .3s,box-shadow .3s;cursor:pointer;}
 .technical-tiles div:hover {transform:scale(1.05);box-shadow:0 0 10px var(--highlight),1px 1px 8px var(--shadow);}
 
-#contentBox {margin:10px;padding:15px;background:var(--tile-light);border-radius:12px;box-shadow:2px 2px 10px var(--shadow);max-height:400px;overflow:auto;font-size:0.9rem;}
-
-.expandable-content::-webkit-scrollbar,#bioPanel::-webkit-scrollbar{width:8px;}
-.expandable-content::-webkit-scrollbar-track,#bioPanel::-webkit-scrollbar-track{background:#f0f0f0;border-radius:10px;}
-body.dark .expandable-content::-webkit-scrollbar-track,body.dark #bioPanel::-webkit-scrollbar-track{background:#333;}
-.expandable-content::-webkit-scrollbar-thumb,#bioPanel::-webkit-scrollbar-thumb{background-color:#1e90ff;border-radius:10px;border:2px solid transparent;background-clip:content-box;}
-.expandable-content::-webkit-scrollbar-thumb:hover,#bioPanel::-webkit-scrollbar-thumb:hover{background-color:#0d62c1;}
-
-@media(max-width:1200px){#profileSection{flex-direction:column;align-items:center;gap:20px;}.sideTile{max-width:95%;}#profileTile{flex:0 0 auto;}}
+#contentBox {margin:10px;padding:15px;background:var(--tile-light);border-radius:12px;box-shadow:2px 2px 10px var(--shadow);font-size:0.9rem;}
 
 footer{text-align:center;padding:10px;background:var(--tile-light);color:var(--text-light);box-shadow:0 -4px 6px var(--shadow);}
 body.dark footer{background:#2c2c2c;color:#f1f1f1;box-shadow:0 -4px 6px rgba(0,0,0,0.6);}
+
+@media(max-width:1200px){#profileSection{flex-direction:column;align-items:center;gap:20px;}.sideTile{max-width:95%;}#profileTile{flex:0 0 auto;}}
 </style>
 </head>
 <body>
@@ -80,7 +74,7 @@ body.dark footer{background:#2c2c2c;color:#f1f1f1;box-shadow:0 -4px 6px rgba(0,0
 <div id="profileSection">
     <div class="sideTile">
         <div class="tileHeader" onclick="toggleExpandable('personalPanel')">Personal Statement</div>
-        <div id="personalPanel" class="expandable"><div class="expandable-content">
+        <div id="personalPanel" class="expandable"><div>
             <p>I am a passionate and results-oriented computing professional with a background in academia, project management, and leadership...</p>
             <p>Increasing my professional network, I have established valuable connections with industry leaders from Lloyds Bank, Yorkshire Water...</p>
             <p>I am an avid learner, actively attending live webinars on AI, robotics and emerging technologies...</p>
@@ -91,14 +85,14 @@ body.dark footer{background:#2c2c2c;color:#f1f1f1;box-shadow:0 -4px 6px rgba(0,0
 
     <div id="profileTile" onclick="toggleExpandable('bioPanel')">
         <img src="https://raw.githubusercontent.com/Eska3210/Website/main/Eska%20Rashid%20photo%20PNG.png">
-        <div id="bioPanel"><div class="expandable-content">
+        <div id="bioPanel"><div>
             <p>Professional Overview: Eska Rashid is a Programme Leader specialising in Computing, with a dedicated focus on Artificial Intelligence (AI) and Technology Leadership...</p>
         </div></div>
     </div>
 
     <div class="sideTile">
         <div class="tileHeader" onclick="toggleExpandable('testimonialPanel')">Testimonials</div>
-        <div id="testimonialPanel" class="expandable"><div class="expandable-content">
+        <div id="testimonialPanel" class="expandable"><div>
             <p>“Eska is a dedicated and committed leader who ensures that learning materials are consistently delivered across all campuses...”</p>
             <p>"Working under Eska Rashid's leadership on the AI project has been a good experience..."</p>
             <p>“Collaborating with Eska Rashid on the AI project has been an exceptional experience...”</p>
@@ -117,15 +111,15 @@ body.dark footer{background:#2c2c2c;color:#f1f1f1;box-shadow:0 -4px 6px rgba(0,0
 <div id="contentBox"></div>
 
 <script>
-const sections = {
+const sections = { /* same as before */ 
 about:`<p>Eska Rashid is a Programme Leader specialising in Computing, AI & Technology Leadership.</p>`,
 qualifications:`<ul><li>MSc Information Systems Management – Distinction</li><li>PGCE Computing with QTS</li><li>BA (Hons) Interactive Multimedia</li></ul>`,
 strengths:`<h2>Strengths</h2><div class="technical-tiles"><div>Strategic Programme Leadership</div><div>AI & Educational Innovation</div><div>Curriculum Design & QA</div><div>Teaching Excellence & Student-Centred Learning</div><div>Industry Partnerships</div><div>Mentoring & team development</div><div>Diversity & Inclusion</div><div>Project Management</div><div>AI Chatbot & Digital Tools</div><div>Stakeholder Engagement</div><div>Academic & Industry Collaboration</div><div>Resilience & Improvement</div></div>`,
 technical:`<div class="technical-tiles"><div>PHP</div><div>SQL</div><div>Python</div><div>Java</div><div>C#</div><div>C++</div><div>MySQL</div><div>ASP.NET</div><div>CSS</div><div>Excel</div><div>Access</div><div>Google Suite</div><div>Microsoft Apps</div><div>Bootstrap</div><div>Javascript</div><div>HTML</div><div>XML</div><div>PostgreSQL</div><div>Node.js</div><div>Pandas</div><div>Git</div><div>MongoDB</div><div>.NET</div><div>Illustrator</div><div>Google Sheets</div><div>R</div><div>Redis</div><div>XAMPP</div><div>Power BI</div><div>DAX</div></div>`,
 cv:`<h2>Curriculum Vitae</h2><iframe src="Eska Rashid CV.pdf" style="width:100%;height:400px;border-radius:10px;border:1px solid #999;"></iframe><button onclick="openFullscreenCV()" style="padding:10px 14px;margin-top:5px;cursor:pointer;">Open Fullscreen</button>`,
 contact:`<p>Email: <a href="mailto:eska3210@gmail.com">eska3210@gmail.com</a></p><p>LinkedIn: <a href="https://linkedin.com/in/eska-rashid" target="_blank">linkedin.com/in/eska-rashid</a></p><p>Mobile: 07776075490</p>`,
-projects:`<h2>Projects</h2><div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; max-height:300px; overflow-y:auto; padding-right:5px;"><div class="menu-tile" style="flex:1 1 180px; padding:10px; text-align:left;">Mathematics, AI Consultant – Outlier AI (2024–Present)<p>Working on multiple AI model training projects...</p></div><div class="menu-tile" style="flex:1 1 180px; padding:10px; text-align:left;">AI & Tech CAPD Lead<p>Leading an institutional AI transformation project...</p></div><div class="menu-tile" style="flex:1 1 180px; padding:10px; text-align:left;">AI Chatbot Development<p>Creating an AI chatbot to support ESL students...</p></div><div class="menu-tile" style="flex:1 1 180px; padding:10px; text-align:center;">Multiplayer Numbers Game<p>A fun and interactive multiplayer game...</p><a href="https://eska3210.github.io/JavaGame/" target="_blank" style="margin-top:5px; display:inline-block; padding:6px 10px; background:var(--highlight); color:#fff; border-radius:6px; text-decoration:none;">Play Game</a></div></div>`,
-experience:`<h2>Experience and Work History</h2><div style="max-height:300px;overflow-y:auto;padding-right:5px;"><p><strong>Programme Leader, Computing – ESL (2024–Present)</strong><br>Leading the Computer Science programme...</p><p><strong>Computing Lecturer – Elizabeth School of London (2024)</strong><br>Designed and delivered modules...</p><p><strong>Computing Lecturer & Leading 3 Computer Science courses – Shipley College (2023–2024)</strong><br>Led 3 Computer Science T-Level programmes...</p><p><strong>Msc Information Systems Management (2020–2022)</strong></p><p><strong>Home Carer (2011–2020)</strong><br>Developed strong interpersonal, empathy, and communication skills...</p><p><strong>Computer Science Supply Teacher – Capita (2010–2011)</strong></p><p><strong>Computing Teacher – Tong Leadership Academy (2009–2010)</strong></p><p><strong>PGCE Placement – The Grange Technology College (2008)</strong></p><p><strong>Tech Representative Manager – University of Huddersfield (2003–2008)</strong><br>Managed laptop rental service...</p><p><strong>Student Harassment Advisor – University of Huddersfield (2003–2008)</strong></p><p><strong>Computing Lecturer – Calderdale College (2003–2006)</strong></p><p><strong>HBOS Group Pension (1991–2001)</strong></p></div>`
+projects:`<h2>Projects</h2><div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;"><div class="menu-tile" style="flex:1 1 180px; padding:10px; text-align:left;">Mathematics, AI Consultant – Outlier AI (2024–Present)<p>Working on multiple AI model training projects...</p></div><div class="menu-tile" style="flex:1 1 180px; padding:10px; text-align:left;">AI & Tech CAPD Lead<p>Leading an institutional AI transformation project...</p></div><div class="menu-tile" style="flex:1 1 180px; padding:10px; text-align:left;">AI Chatbot Development<p>Creating an AI chatbot to support ESL students...</p></div><div class="menu-tile" style="flex:1 1 180px; padding:10px; text-align:center;">Multiplayer Numbers Game<p>A fun and interactive multiplayer game...</p><a href="https://eska3210.github.io/JavaGame/" target="_blank" style="margin-top:5px; display:inline-block; padding:6px 10px; background:var(--highlight); color:#fff; border-radius:6px; text-decoration:none;">Play Game</a></div></div>`,
+experience:`<h2>Experience and Work History</h2><div><p><strong>Programme Leader, Computing – ESL (2024–Present)</strong><br>Leading the Computer Science programme...</p><p><strong>Computing Lecturer – Elizabeth School of London (2024)</strong><br>Designed and delivered modules...</p><p><strong>Computing Lecturer & Leading 3 Computer Science courses – Shipley College (2023–2024)</strong><br>Led 3 Computer Science T-Level programmes...</p><p><strong>Msc Information Systems Management (2020–2022)</strong></p><p><strong>Home Carer (2011–2020)</strong><br>Developed strong interpersonal, empathy, and communication skills...</p><p><strong>Computer Science Supply Teacher – Capita (2010–2011)</strong></p><p><strong>Computing Teacher – Tong Leadership Academy (2009–2010)</strong></p><p><strong>PGCE Placement – The Grange Technology College (2008)</strong></p><p><strong>Tech Representative Manager – University of Huddersfield (2003–2008)</strong><br>Managed laptop rental service...</p><p><strong>Student Harassment Advisor – University of Huddersfield (2003–2008)</strong></p><p><strong>Computing Lecturer – Calderdale College (2003–2006)</strong></p><p><strong>HBOS Group Pension (1991–2001)</strong></p></div>`
 };
 
 function openSection(name){const box=document.getElementById("contentBox");box.style.display="block";box.innerHTML=sections[name];box.scrollIntoView({behavior:"smooth"});}
